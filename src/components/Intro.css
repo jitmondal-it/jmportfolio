@@ -1,267 +1,680 @@
-/* =========================================================
-   INTRO SCREEN
-   ========================================================= */
+/* ==========================================================================
+   ANIMATED PROFILE INTRODUCTION
+   Exact Recreation of Reference Animation (Welcome -> Card Transition)
+   ========================================================================== */
 
-.intro-screen {
+:root {
+  --intro-bg: #F6F2EC;
+  --intro-card-color: #6E655F;
+  --intro-card-text: #FFFFFF;
+  --intro-pill-bg: rgba(40, 36, 33, 0.45);
+  --intro-pill-hover: rgba(40, 36, 33, 0.75);
+  --intro-type-hero: #6E655F;
+  --intro-type-stroke-inner: rgba(110, 101, 95, 0.35);
+  --intro-type-stroke-outer: rgba(110, 101, 95, 0.18);
+  --intro-badge-bg: rgba(110, 101, 95, 0.1);
+  --intro-badge-border: rgba(110, 101, 95, 0.2);
+  --intro-badge-text: #6E655F;
+}
+
+html[data-theme="dark"] {
+  --intro-bg: #1a1a2b;
+  --intro-card-color: #383a52;
+  --intro-card-text: #F2E9E4;
+  --intro-pill-bg: rgba(18, 18, 30, 0.65);
+  --intro-pill-hover: rgba(18, 18, 30, 0.95);
+  --intro-type-hero: #F2E9E4;
+  --intro-type-stroke-inner: rgba(242, 233, 228, 0.45);
+  --intro-type-stroke-outer: rgba(242, 233, 228, 0.25);
+  --intro-badge-bg: rgba(74, 78, 105, 0.35);
+  --intro-badge-border: rgba(201, 173, 167, 0.28);
+  --intro-badge-text: #F2E9E4;
+}
+
+.intro-portal {
   position: fixed;
-
   inset: 0;
-
-  width: 100%;
-  height: 100vh;
-
-  background: #000;
-
+  z-index: 999999;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  z-index: 99999;
-
   overflow: hidden;
-
-  opacity: 1;
-  visibility: visible;
-
-  transition:
-    opacity 0.8s ease,
-    visibility 0.8s ease;
+  background-color: var(--intro-bg);
+  color: var(--intro-card-text);
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  touch-action: none;
+  user-select: none;
+  transition: background-color 0.3s ease;
 }
 
+/* Atmospheric Ambient Warmth */
+.intro-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(110, 101, 95, 0.04) 55%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  z-index: 1;
+}
 
-/* =========================================================
-   HANDWRITING WRAPPER
-   ========================================================= */
+html[data-theme="dark"] .intro-ambient-glow {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(201, 173, 167, 0.15) 0%,
+    rgba(74, 78, 105, 0.12) 45%,
+    rgba(26, 26, 43, 0.96) 100%
+  );
+}
 
-.handwriting-wrapper {
-  width: min(85vw, 700px);
+/* Top Navigation Bar: Skip Button & Monogram Tag */
+.intro-top-bar {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  pointer-events: auto;
+}
 
+.intro-badge-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--intro-badge-text);
+  padding: 0.38rem 0.8rem;
+  border-radius: 9999px;
+  background: var(--intro-badge-bg);
+  border: 1px solid var(--intro-badge-border);
+  backdrop-filter: blur(8px);
+}
+
+.intro-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success, #34d399);
+  box-shadow: 0 0 8px var(--success, #34d399);
+}
+
+.intro-skip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  border: 1px solid var(--intro-badge-border);
+  background: var(--intro-badge-bg);
+  color: var(--intro-badge-text);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.intro-skip-btn:hover {
+  background: var(--intro-card-color);
+  color: #ffffff;
+  border-color: var(--intro-card-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.intro-skip-btn:focus-visible {
+  outline: 2px solid var(--intro-card-color);
+  outline-offset: 3px;
+}
+
+.intro-skip-btn .key-hint {
+  font-size: 0.65rem;
+  opacity: 0.75;
+  margin-left: 0.2rem;
+}
+
+/* ==========================================================================
+   STAGE 1: 5-ROW EDITORIAL TYPOGRAPHY WALLPAPER GRID (FULL-WIDTH DOMINANT)
+   CRITICAL REQUIREMENT: "JIT MONDAL" NEVER CROPPED OR CUT OFF
+   ========================================================================== */
+.intro-stage-center {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
+  overflow: hidden;
 }
 
-
-/* =========================================================
-   SVG
-   ========================================================= */
-
-.hello-svg {
-  width: 100%;
-  height: auto;
-
+.intro-typography-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 5;
+  box-sizing: border-box;
+  padding: clamp(0.5rem, 1.8vh, 1.5rem) 0;
   overflow: visible;
 }
 
-
-/* =========================================================
-   HELLO HANDWRITING
-   ========================================================= */
-
-.hello-text {
-  font-family: "Brush Script MT", "Segoe Script", cursive;
-
-  font-size: 150px;
-
-  font-weight: 400;
-
-  letter-spacing: 2px;
-
-  fill: transparent;
-
-  stroke: #ffffff;
-
-  stroke-width: 2.2;
-
-  stroke-linecap: round;
-
-  stroke-linejoin: round;
-
-  /*
-    Creates the handwriting drawing effect.
-  */
-  stroke-dasharray: 1200;
-
-  stroke-dashoffset: 1200;
-
-  animation:
-    handwriting 3.2s
-    cubic-bezier(0.65, 0, 0.35, 1)
-    forwards,
-
-    fillHello 0.35s
-    ease
-    3s
-    forwards;
+.intro-type-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  max-width: 100vw;
+  white-space: nowrap;
+  line-height: 0.88;
+  user-select: none;
+  font-family: "Syne", "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
 }
 
-
-/* =========================================================
-   HANDWRITING DRAW ANIMATION
-   ========================================================= */
-
-@keyframes handwriting {
-
-  0% {
-    stroke-dashoffset: 1200;
-  }
-
-  100% {
-    stroke-dashoffset: 0;
-  }
-
+/* Fluid responsive typography:
+   Calibrated at 8.73vw so "JIT MONDAL" occupies ~92% of the viewport width (90–94% range)
+   with J and L remaining fully in view on all desktop, tablet, and mobile screens down to 320px */
+.intro-type-row span {
+  font-size: var(--intro-fit-font-size, clamp(1.6rem, 8.73vw, 11rem));
+  letter-spacing: clamp(0.005em, 0.1vw, 0.012em);
+  line-height: 0.88;
+  display: inline-block;
+  will-change: transform, opacity;
+  text-align: center;
 }
 
-
-/* =========================================================
-   FILL AFTER WRITING
-   ========================================================= */
-
-@keyframes fillHello {
-
-  0% {
-    fill: transparent;
-  }
-
-  100% {
-    fill: #ffffff;
-  }
-
+.intro-type-row.row-outer-top {
+  opacity: 0.32;
+  -webkit-text-stroke: 1.4px var(--intro-type-stroke-outer);
+  color: transparent;
 }
 
+.intro-type-row.row-inner-top {
+  opacity: 0.68;
+  -webkit-text-stroke: 1.8px var(--intro-type-stroke-inner);
+  color: transparent;
+}
 
-/* =========================================================
-   EXIT
-   ========================================================= */
+.intro-type-row.row-center-hero {
+  opacity: 1;
+  color: var(--intro-type-hero);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
 
-.intro-screen.intro-exit {
-  opacity: 0;
+.intro-type-row.row-inner-bottom {
+  opacity: 0.68;
+  -webkit-text-stroke: 1.8px var(--intro-type-stroke-inner);
+  color: transparent;
+}
 
-  visibility: hidden;
+.intro-type-row.row-outer-bottom {
+  opacity: 0.32;
+  -webkit-text-stroke: 1.4px var(--intro-type-stroke-outer);
+  color: transparent;
+}
 
+/* ==========================================================================
+   STAGE 1 & 2: SEAMLESS WHITE TEXT CUTOUT OVER CIRCULAR PORTRAIT
+   ========================================================================== */
+.intro-portrait-text-cutout {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: visible;
+}
+
+.intro-portrait-text-cutout span {
+  font-family: "Syne", "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  font-size: var(--intro-fit-font-size, clamp(1.6rem, 8.73vw, 11rem));
+  letter-spacing: clamp(0.005em, 0.1vw, 0.012em);
+  text-transform: uppercase;
+  -webkit-text-stroke: 2px #FFFFFF;
+  color: transparent;
+  white-space: nowrap;
+  text-align: center;
+  display: inline-block;
+  line-height: 0.88;
+}
+
+/* ==========================================================================
+   PROFILE HERO BANNER: MORPH FROM STAGE 1 CENTER CIRCLE TO STAGE 4 CARD
+   ========================================================================== */
+.intro-card-stage-wrap {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+
+.intro-editorial-banner {
+  display: flex;
+  align-items: center;
+  position: relative;
+  max-width: 580px;
+  width: 100%;
+  pointer-events: auto;
+}
+
+/* Continuous Circular Portrait (centered in Stage 1, slides left in Stage 2/3) */
+.intro-banner-avatar-wrap {
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.intro-banner-avatar {
+  width: clamp(110px, 17vw, 150px);
+  height: clamp(110px, 17vw, 150px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid var(--intro-card-color);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+  background: var(--intro-card-color);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.intro-banner-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
   pointer-events: none;
 }
 
+/* Information Bar Growing Horizontally Out from Behind the Portrait */
+.intro-banner-card {
+  position: relative;
+  z-index: 8;
+  flex: 1;
+  background: var(--intro-card-color);
+  color: var(--intro-card-text);
+  margin-left: clamp(-42px, -5.5vw, -55px);
+  padding: 1.1rem 1.6rem 1.1rem clamp(52px, 7.5vw, 70px);
+  border-radius: 0 18px 18px 0;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: clamp(92px, 12vw, 110px);
+  overflow: hidden;
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+.intro-banner-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
 
+/* Top Name & Role */
+.intro-banner-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.intro-banner-name {
+  font-family: "Syne", var(--font-sans, sans-serif);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--intro-card-text);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.intro-banner-role {
+  font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+  font-weight: 500;
+  opacity: 0.88;
+  letter-spacing: 0.02em;
+  margin: 0;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+/* Crisp Divider Line with subtle progress fill */
+.intro-banner-divider-wrap {
+  position: relative;
+  width: 100%;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.35);
+  margin: 0.55rem 0 0.65rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.intro-banner-divider-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  width: 0%;
+  transition: width 0.05s linear;
+}
+
+/* Bottom Action Row: Pill Button + Social Icons */
+.intro-banner-bottom {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.intro-banner-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: var(--intro-pill-bg);
+  color: #ffffff;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  padding: 0.4rem 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+}
+
+.intro-banner-pill-btn:hover {
+  background: var(--intro-pill-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.intro-banner-pill-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.intro-banner-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.intro-banner-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.intro-banner-icon-btn:hover {
+  color: #ffffff;
+  transform: scale(1.2);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.intro-banner-icon-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (1440px, 1024px, 768px, 430px, 390px, 360px, 320px)
+   ========================================================================== */
 @media (max-width: 768px) {
-
-  .handwriting-wrapper {
-    width: 90vw;
+  .intro-top-bar {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
   }
 
-  .hello-text {
-    font-size: 135px;
-
-    stroke-width: 2;
+  .intro-badge-indicator {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.65rem;
   }
 
+  .intro-skip-btn {
+    font-size: 0.7rem;
+    padding: 0.38rem 0.8rem;
+    min-height: 36px;
+  }
+
+  .intro-card-stage-wrap {
+    padding: 0 1rem;
+  }
+
+  .intro-banner-card {
+    padding: 0.95rem 1.3rem 0.95rem clamp(40px, 6vw, 55px);
+  }
 }
 
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 480px) {
-
-  .handwriting-wrapper {
-    width: 94vw;
+@media (max-width: 580px) {
+  .intro-badge-indicator {
+    display: none;
   }
 
-  .hello-text {
-    font-size: 125px;
-
-    stroke-width: 1.8;
+  .intro-top-bar {
+    justify-content: flex-end;
   }
 
+  .intro-banner-avatar {
+    border-width: 4px;
+  }
+
+  .intro-banner-name {
+    font-size: clamp(1.05rem, 3.8vw, 1.25rem);
+  }
+
+  .intro-banner-card {
+    padding: 0.85rem 1rem 0.85rem clamp(34px, 8vw, 44px);
+    margin-left: clamp(-30px, -7vw, -38px);
+    border-radius: 0 16px 16px 0;
+  }
+
+  .intro-banner-bottom {
+    gap: 0.65rem;
+  }
 }
 
+/* Mobile: Compact stacked action row for screens <= 430px (iPhone Pro Max down to SE) */
+@media (max-width: 430px) {
+  .intro-card-stage-wrap {
+    padding: 0 0.75rem;
+  }
 
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+  .intro-banner-card {
+    padding: 0.85rem 0.95rem 0.85rem clamp(32px, 8.5vw, 40px);
+    margin-left: clamp(-28px, -7.5vw, -34px);
+  }
 
+  .intro-banner-name {
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+  }
+
+  .intro-banner-role {
+    font-size: 0.7rem;
+    line-height: 1.25;
+  }
+
+  .intro-banner-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+  }
+
+  .intro-banner-pill-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.68rem;
+    padding: 0.42rem 0.85rem;
+  }
+
+  .intro-banner-socials {
+    justify-content: center;
+    gap: 0.85rem;
+  }
+
+  .intro-banner-icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Narrow mobile: 360px (Common Android / Galaxy) */
+@media (max-width: 360px) {
+  .intro-card-stage-wrap {
+    padding: 0 0.5rem;
+  }
+
+  .intro-banner-avatar {
+    border-width: 3.5px;
+  }
+
+  .intro-banner-card {
+    padding: 0.75rem 0.85rem 0.75rem 30px;
+    margin-left: -26px;
+    border-radius: 0 14px 14px 0;
+  }
+
+  .intro-banner-name {
+    font-size: 0.98rem;
+  }
+
+  .intro-banner-role {
+    font-size: 0.67rem;
+  }
+
+  .intro-banner-pill-btn {
+    font-size: 0.65rem;
+    padding: 0.38rem 0.75rem;
+  }
+
+  .intro-banner-socials {
+    gap: 0.7rem;
+  }
+
+  .intro-banner-icon-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+}
+
+/* Minimum mobile validation: 320px */
+@media (max-width: 320px) {
+  .intro-top-bar {
+    top: 0.65rem;
+    left: 0.65rem;
+    right: 0.65rem;
+  }
+
+  .intro-skip-btn {
+    font-size: 0.65rem;
+    padding: 0.32rem 0.65rem;
+    min-height: 34px;
+  }
+
+  .intro-card-stage-wrap {
+    padding: 0 0.4rem;
+  }
+
+  .intro-banner-avatar {
+    border-width: 3px;
+  }
+
+  .intro-banner-card {
+    padding: 0.7rem 0.75rem 0.7rem 26px;
+    margin-left: -22px;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .intro-banner-name {
+    font-size: 0.92rem;
+  }
+
+  .intro-banner-role {
+    font-size: 0.64rem;
+  }
+
+  .intro-banner-socials {
+    gap: 0.55rem;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-
-  .hello-text {
-    animation: none;
-
-    stroke-dashoffset: 0;
-
-    fill: #ffffff;
-  }
-
-  .intro-screen {
+  .intro-banner-divider-fill {
     transition: none;
   }
 
-}
-
-/* =========================================================
-   WELCOME MESSAGE
-   ========================================================= */
-
-.intro-subtitle {
-  position: absolute;
-
-  top: 72%;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  margin: 0;
-
-  white-space: nowrap;
-
-  color: rgba(255, 255, 255, 0.55);
-
-  font-family: "Saira", sans-serif;
-
-  font-size: 0.85rem;
-
-  font-weight: 300;
-
-  letter-spacing: 0.18em;
-
-  text-transform: uppercase;
-
-  opacity: 0;
-
-  animation:
-    welcomeAppear 0.8s ease
-    3.45s forwards;
-}
-
-
-@keyframes welcomeAppear {
-
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(8px);
+  .intro-banner-pill-btn,
+  .intro-banner-icon-btn,
+  .intro-skip-btn {
+    transition: none !important;
   }
-
-  100% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-
-/* Mobile */
-
-@media (max-width: 480px) {
-
-  .intro-subtitle {
-    top: 73%;
-
-    font-size: 0.68rem;
-
-    letter-spacing: 0.12em;
-  }
-
 }

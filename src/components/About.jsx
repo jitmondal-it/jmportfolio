@@ -1,357 +1,113 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { aboutInfo, assets } from "../assets/assets";
-import "./About.css";
+import { Link } from "react-router-dom";
+import { FiUser, FiBookOpen, FiMapPin, FiAward, FiArrowUpRight } from "react-icons/fi";
+import { education } from "../content/site";
 
 const About = () => {
+  // Only display college card on the home page as requested
+  const college = education[0];
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
-      viewport={{ once: true }}
-      id="about"
-      className="about-wrapper relative py-24 overflow-hidden"
-    >
-      {/* =========================
-          BACKGROUND GRID
-          ========================= */}
-      <div className="about-grid-svg">
-        <svg
-          width="100%"
-          height="100%"
-          xmlns="http://www.w3.org/2000/svg"
-          className="about-grid-svg-inner"
-        >
-          <defs>
-            <linearGradient
-              id="aboutGridFade"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-            >
-              <stop offset="0%" stopOpacity="0.6" />
-              <stop offset="40%" stopOpacity="0.15" />
-              <stop offset="75%" stopOpacity="0" />
-            </linearGradient>
-
-            <mask id="aboutGridMask">
-              <rect
-                width="100%"
-                height="100%"
-                fill="url(#aboutGridFade)"
-              />
-            </mask>
-          </defs>
-
-          <g mask="url(#aboutGridMask)">
-            {/* Vertical lines */}
-            {Array.from({ length: 26 }).map((_, i) => (
-              <line
-                key={`v${i}`}
-                x1={`${(i / 25) * 100}%`}
-                y1="0"
-                x2={`${(i / 25) * 100}%`}
-                y2="100%"
-                className="about-grid-line"
-              />
-            ))}
-
-            {/* Horizontal lines */}
-            {Array.from({ length: 14 }).map((_, i) => (
-              <line
-                key={`h${i}`}
-                x1="0"
-                y1={`${(i / 13) * 100}%`}
-                x2="100%"
-                y2={`${(i / 13) * 100}%`}
-                className="about-grid-line"
-              />
-            ))}
-          </g>
-        </svg>
+    <section id="about" className="section-wrap">
+      <div className="section-header">
+        <h2 className="section-title">
+          <FiUser className="section-title-icon" aria-hidden="true" />
+          <span>About Me</span>
+        </h2>
       </div>
 
-      {/* =========================
-          DOODLE - TOP LEFT
-          ========================= */}
-      <svg
-        className="doodle-b absolute pointer-events-none"
-        style={{
-          top: "6%",
-          left: "2%",
-          opacity: 0.16,
-          zIndex: 1,
-        }}
-        width="28"
-        height="28"
-        viewBox="0 0 28 28"
-        fill="none"
-      >
-        <line
-          x1="14"
-          y1="2"
-          x2="14"
-          y2="26"
-          className="about-doodle-line"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
+      <div className="about-content-card glass-card">
+        {/* Authentic Biography */}
+        <p className="about-bio-text">
+          I'm an IT student and an aspiring full-stack developer who enjoys building modern and scalable web applications. My journey into development started with learning core programming concepts and Java, which gradually led me to explore full-stack development using React, Spring Boot, and PostgreSQL.
+        </p>
+        <p className="about-bio-text secondary">
+          Outside of coursework, I actively improve my problem-solving skills by practicing Data Structures and Algorithms while continuing to explore new technologies. I'm naturally curious, consistent in learning, and motivated to grow into a software engineer who builds meaningful, impactful solutions.
+        </p>
 
-        <line
-          x1="2"
-          y1="14"
-          x2="26"
-          y2="14"
-          className="about-doodle-line"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
-      </svg>
-
-      {/* =========================
-          DOODLE - TOP RIGHT
-          ========================= */}
-      <svg
-        className="doodle-a absolute pointer-events-none"
-        style={{
-          top: "4%",
-          right: "3%",
-          opacity: 0.14,
-          zIndex: 1,
-        }}
-        width="72"
-        height="72"
-        viewBox="0 0 72 72"
-        fill="none"
-      >
-        <path
-          d="M36 8 C56 6,66 22,64 40 C62 58,46 68,28 64 C10 60,2 44,6 26 C10 10,22 6,36 8 Z"
-          className="about-doodle-line"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          fill="none"
-        />
-
-        <path
-          d="M36 18 C52 16,60 30,58 44 C56 58,44 66,30 62 C16 58,10 46,14 32 C18 20,26 16,36 18 Z"
-          className="about-doodle-line-secondary"
-          strokeWidth="1.3"
-          strokeLinecap="round"
-          fill="none"
-        />
-      </svg>
-
-      {/* =========================
-          DOODLE - BOTTOM RIGHT
-          ========================= */}
-      <svg
-        className="doodle-b absolute pointer-events-none"
-        style={{
-          bottom: "8%",
-          right: "2%",
-          opacity: 0.1,
-          zIndex: 1,
-        }}
-        width="60"
-        height="32"
-        viewBox="0 0 60 32"
-        fill="none"
-      >
-        <path
-          d="M4 6 Q30 2 56 6"
-          className="about-doodle-line"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-
-        <path
-          d="M8 16 Q32 12 52 16"
-          className="about-doodle-line-secondary"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-
-        <path
-          d="M4 26 Q30 22 56 26"
-          className="about-doodle-line"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      </svg>
-
-      {/* =========================
-          ATMOSPHERIC GLOW
-          ========================= */}
-      <div className="about-atmospheric-glow absolute pointer-events-none" />
-
-      {/* =========================
-          MAIN CONTENT
-          ========================= */}
-      <div className="about-section container mx-auto px-8 md:px-16 relative z-10">
-
-        {/* =========================
-            SECTION HEADING
-            ========================= */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className="about-heading-top">
-            <span className="heading-line left" />
-
-            <span className="about-section-tag">
-              Get to know me
-            </span>
-
-            <span className="heading-line right" />
-          </div>
-
-          <h2 className="about-heading text-4xl md:text-5xl mb-4">
-            About{" "}
-            <span className="about-heading-accent">
-              Me
-            </span>
-          </h2>
-
-          <p className="about-subtitle">
-            Discover more about my journey, skills, and passion
-            for web development
-          </p>
-        </motion.div>
-
-        {/* =========================
-            IMAGE + CONTENT
-            ========================= */}
-        <div className="flex flex-col md:flex-row items-center gap-12">
-
-          {/* =========================
-              IMAGE
-              ========================= */}
-          <motion.div
-            className="md:w-1/2 w-full flex justify-center items-start"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.7,
-              ease: "easeOut",
-            }}
-            viewport={{ once: true }}
-          >
-            <div
-              className="about-img-wrap w-full"
-              style={{
-                aspectRatio: "4/5",
-                maxWidth: "420px",
-              }}
-            >
-              <img
-                src={assets.profileImg}
-                alt="Jit Mondal"
-                className="about-profile-image"
-              />
-            </div>
-          </motion.div>
-
-          {/* =========================
-              RIGHT CONTENT
-              ========================= */}
-          <motion.div
-            className="md:w-1/2 w-full flex flex-col gap-6"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.7,
-              ease: "easeOut",
-              delay: 0.1,
-            }}
-            viewport={{ once: true }}
-          >
-
-            {/* My Journey */}
-            <div className="journey-heading">
-              <span className="journey-line" />
-
-              <span className="journey-label">
-                My Journey
-              </span>
-            </div>
-
-            {/* Paragraph 1 */}
-            <p className="about-paragraph">
-              I'm an IT student and an aspiring full-stack
-              developer who enjoys building modern and scalable
-              web applications. My journey into development
-              started with learning core programming concepts
-              and Java, which gradually led me to explore
-              full-stack development using React, Spring Boot,
-              and PostgreSQL.
-            </p>
-
-            <div className="text-divider" />
-
-            {/* Paragraph 2 */}
-            <p className="about-paragraph">
-              Outside of coursework, I actively improve my
-              problem-solving skills by practicing Data
-              Structures and Algorithms while continuing to
-              explore new technologies. I'm naturally curious,
-              consistent in learning, and motivated to grow
-              into a software engineer who builds meaningful,
-              impactful solutions.
-            </p>
-
-            {/* =========================
-                INFO CARDS
-                ========================= */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
-
-              {aboutInfo.map((data, index) => (
-                <motion.div
-                  key={index}
-                  className="info-card"
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
-                >
-                  {/* Icon */}
-                  <div className="info-card-icon">
-                    <data.icon />
+        {/* College Education Spotlight (College Only - Schools stay on /about) */}
+        {college && (
+          <div className="about-sub-block">
+            <h3 className="sub-block-title">
+              <FiBookOpen className="inline-icon" /> Education
+            </h3>
+            <div className="about-college-card-wrap">
+              <div className="education-timeline-card glass-card">
+                <div className="edu-timeline-badge" aria-hidden="true">
+                  <FiBookOpen />
+                </div>
+                <div className="edu-timeline-body">
+                  <div className="edu-timeline-header">
+                    <div>
+                      <span className="edu-timeline-type">{college.type || "Undergraduate Degree"}</span>
+                      <h4 className="edu-timeline-inst">{college.institution}</h4>
+                      <p className="edu-timeline-prog">{college.program}</p>
+                    </div>
+                    <div className="edu-timeline-meta">
+                      <span className="edu-timeline-year">{college.year}</span>
+                      {college.location && (
+                        <span className="edu-timeline-loc">
+                          <FiMapPin style={{ fontSize: "0.8em" }} /> {college.location}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Title */}
-                  <h4 className="info-card-title">
-                    {data.title}
-                  </h4>
+                  {college.grade && (() => {
+                    const certLink = college.certificateLink || college.link || college.certificateUrl;
 
-                  {/* Description */}
-                  <p className="info-card-description">
-                    {data.description}
+                    if (certLink) {
+                      return (
+                        <a
+                          href={certLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="edu-timeline-honor-pill is-link"
+                          title={`View ${college.grade} Certificate / Marksheet`}
+                          aria-label={`View certificate for ${college.grade} at ${college.institution}`}
+                        >
+                          <FiAward className="inline-icon" />
+                          <span className="edu-grade-text">{college.grade}</span>
+                          <span className="edu-cert-badge">
+                            <span>View Certificate</span>
+                            <FiArrowUpRight className="cert-arrow-icon" />
+                          </span>
+                        </a>
+                      );
+                    }
+
+                    return (
+                      <div className="edu-timeline-honor-pill">
+                        <FiAward className="inline-icon" />
+                        <span className="edu-grade-text">{college.grade}</span>
+                      </div>
+                    );
+                  })()}
+
+                  <p className="edu-timeline-focus">
+                    <strong>Core Focus:</strong> {college.focus}
                   </p>
-                </motion.div>
-              ))}
-
+                </div>
+              </div>
             </div>
-          </motion.div>
+          </div>
+        )}
+
+        {/* More About Me Button (Matching View All Projects design) */}
+        <div className="view-all-projects-wrapper" style={{ marginTop: "2.25rem" }}>
+          <Link
+            to="/about"
+            className="learn-more uiverse-learn-more"
+            id="more-about-me-btn"
+            aria-label="More about my background, education, and achievements"
+          >
+            <span className="circle" aria-hidden="true">
+              <span className="icon arrow" />
+            </span>
+            <span className="button-text">More About Me</span>
+          </Link>
         </div>
       </div>
-    </motion.div>
+    </section>
   );
 };
 
