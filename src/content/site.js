@@ -162,10 +162,10 @@ export const featuredProjects = [
     description:
       "A comprehensive job portal where candidates discover, filter, and apply for openings, while recruiters publish listings and track candidate workflows. Built with a decoupled architecture featuring JWT security, structured role-based access, and flexible document persistence.",
     architecture: [
-      "JWT Authentication with Spring Security Role-Based Access Control (RBAC)",
-      "High-throughput RESTful controllers with DTO validation and error handlers",
-      "Dynamic document queries on MongoDB for rapid candidate and listing lookup",
-      "Componentized React & TypeScript interface built with Mantine UI & Tailwind CSS",
+      "Secure authentication using JWT and Spring Security with role-based access control (RBAC)",
+      "REST APIs with DTO validation and centralized exception handling",
+      "MongoDB queries for retrieving job listings and candidate information",
+      "Reusable React and TypeScript components styled with Mantine UI and Tailwind CSS",
     ],
     tech: [
       "React",
