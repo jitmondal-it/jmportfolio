@@ -20,19 +20,19 @@ const AboutPage = () => {
   }, []);
 
   const corePhilosophy = [
-    {
-      title: "Resilient Systems Architecture",
-      desc: "Architecting backend microservices and RESTful APIs using Java, Spring Boot, Spring Security, and PostgreSQL with a strong focus on fault tolerance, clean separation of concerns, and reliable transactional integrity.",
-    },
-    {
-      title: "Algorithmic Precision & DSA",
-      desc: "Actively honing problem-solving instincts through daily Data Structures & Algorithms practice on LeetCode, optimizing time and space complexity across graph, tree, dynamic programming, and hash topologies.",
-    },
-    {
-      title: "User-Centric Reactive Interfaces",
-      desc: "Pairing robust backend systems with crisp, responsive frontend applications in React. Designing intuitive UX, smooth micro-interactions, accessible typography, and seamless real-time WebSocket communication.",
-    },
-  ];
+  {
+    title: "Building Reliable Backend Systems",
+    desc: "I enjoy building backend applications with Java and Spring Boot, focusing on clean code, secure APIs, and well-structured microservices. My goal is to create systems that are reliable, maintainable, and easy to scale.",
+  },
+  {
+    title: "Learning Through Problem Solving",
+    desc: "I regularly practice Data Structures and Algorithms to improve my problem-solving skills. From arrays and trees to graphs and dynamic programming, I focus on understanding the logic and finding efficient solutions.",
+  },
+  {
+    title: "Creating Better User Experiences",
+    desc: "I use React to build responsive and intuitive interfaces that work smoothly with backend services. I enjoy improving the overall user experience through clean layouts, thoughtful interactions, and real-time features.",
+  },
+];
 
   return (
     <div className="about-page section-wrap">

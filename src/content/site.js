@@ -5,7 +5,7 @@ export const profile = {
   headline:
     "Java backend engineer architecting resilient APIs, distributed microservices, and reactive full-stack web applications with Spring Boot and React.",
   portrait: "/j-pic.jpeg",
-  resume: "/CV_JM.pdf",
+  resume: "/Jit Mondal CV.pdf",
   email: "jitmondal631@gmail.com",
   location: "Murshidabad, West-Bengal",
   availability: "Available for engineering roles",
@@ -138,7 +138,6 @@ export const skillGroups = [
     items: [
       { name: "PostgreSQL", icon: "/technology/postgresql.png", level: "Relational" },
       { name: "MongoDB", icon: "/technology/mongodb.png", level: "Document" },
-      { name: "MySQL", icon: "/technology/mysql.png", level: "Relational" },
       { name: "SQL Query Optimization", level: "Query" },
     ],
   },
@@ -147,9 +146,7 @@ export const skillGroups = [
     category: "frontend",
     items: [
       { name: "React", icon: "/technology/react.png", level: "UI Library" },
-      { name: "JavaScript (ES6+)", icon: "/technology/js.webp", level: "Language" },
-      { name: "TypeScript", icon: "/technology/typescript.jpeg", level: "Type Safe" },
-      { name: "Tailwind CSS", icon: "/technology/tailwind-css.webp", level: "Styling" },
+      { name: "JavaScript", icon: "/technology/js.webp", level: "Language" },
       { name: "HTML5 / Semantic Web", icon: "/technology/html.jpg", level: "Structure" },
       { name: "CSS3 / Modern Layouts", icon: "/technology/css.png", level: "Styling" },
     ],
