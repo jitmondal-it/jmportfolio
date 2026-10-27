@@ -1,2 +1,1 @@
-export { profile as assets } from "../content/site";
-export { profile } from "../content/site";
+export { profile as assets, profile } from "../data/profile";

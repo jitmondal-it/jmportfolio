@@ -3,10 +3,10 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import ProjectsPage from "./pages/ProjectsPage";
 import AboutPage from "./pages/AboutPage";
-import SiteHeader from "./components/SiteHeader";
-import Footer from "./components/Footer";
-import Intro from "./components/Intro";
-import AIChatBot from "./components/AIChatBot";
+import SiteHeader from "./components/layout/SiteHeader";
+import Footer from "./components/layout/Footer";
+import Intro from "./components/sections/Intro";
+import AIChatBot from "./components/chatbot/AIChatBot";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
 
 const ScrollToTop = () => {

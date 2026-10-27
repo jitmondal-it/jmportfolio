@@ -6,7 +6,7 @@ import {
   skillGroups,
   featuredProjects,
   additionalProjects,
-} from "../content/site.js";
+} from "../data/index.js";
 
 /**
  * Builds a canonical list of trusted link records strictly from site.js.

@@ -9,16 +9,8 @@ import {
   FiGithub,
   FiMail,
 } from "react-icons/fi";
-import { featuredProjects, additionalProjects } from "../content/site";
-import ProjectCard from "../components/ProjectCard";
-
-const categories = [
-  { id: "all", label: "All Projects" },
-  { id: "fullstack", label: "Full-Stack", match: ["Full-Stack", "Storefront"] },
-  { id: "microservices", label: "Microservices & Systems", match: ["Microservices", "AI", "Distributed"] },
-  { id: "realtime", label: "Realtime & Cloud", match: ["Realtime", "Cloud", "WebSocket"] },
-  { id: "algorithms", label: "Algorithms & DSA", match: ["Algorithmic", "DSA"] },
-];
+import { featuredProjects, additionalProjects, projectCategories as categories } from "../data/projects";
+import ProjectCard from "../components/sections/ProjectCard";
 
 const ProjectsPage = () => {
   const [activeCategory, setActiveCategory] = useState("all");

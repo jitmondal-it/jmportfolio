@@ -12,8 +12,8 @@ import {
   FiRotateCcw,
 } from "react-icons/fi";
 import Bot3D from "./Bot3D";
-import { isTrustedUrl } from "../utils/portfolioRetriever";
-import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
+import { isTrustedUrl } from "../../utils/portfolioRetriever";
+import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion";
 import "./AIChatBot.css";
 
 const STARTER_QUESTIONS = [
@@ -33,7 +33,7 @@ const INITIAL_MESSAGE = {
 
 /**
  * Renders formatted assistant text with strict URL verification.
- * Any link not verified against site.js is rendered safely as plain text.
+ * Any link not verified against portfolio data is rendered safely as plain text.
  */
 const SafeFormattedText = ({ content }) => {
   if (!content) return null;
@@ -189,7 +189,6 @@ const StructuredAssistantMessage = ({ structured, fallbackContent }) => {
   );
 };
 
-
 /**
  * Returns an appropriate icon based on the link type.
  */
@@ -294,7 +293,7 @@ const AIChatBot = () => {
         throw new Error(data.error || "Failed to reach AI service.");
       }
 
-      // Filter and validate links against site.js
+      // Filter and validate links against portfolio data
       const validatedLinks = (data.suggestedLinks || []).filter((l) =>
         isTrustedUrl(l.url)
       );

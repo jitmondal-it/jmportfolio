@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiCheck, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { SiLeetcode } from "react-icons/si";
-import { profile, socials } from "../content/site";
+import { profile, socials } from "../../data";
 
 const ICONS = {
   github: FiGithub,
@@ -66,10 +66,8 @@ const HeroCard = () => {
         {/* Sliding Bottom Drawer */}
         <div className="uiverse-bottom">
           <div className="uiverse-content">
-            <span className="uiverse-name">Jit Mondal</span>
-            <span className="uiverse-role">
-              Java Backend Developer · Full-Stack Engineer
-            </span>
+            <span className="uiverse-name">{profile.name}</span>
+            <span className="uiverse-role">{profile.role}</span>
             <p className="uiverse-about-me">
               I build scalable backend systems, secure REST APIs, and modern web
               applications. Passionate about microservices, real-time

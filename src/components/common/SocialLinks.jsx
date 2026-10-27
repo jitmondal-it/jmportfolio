@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiCheck, FiCopy } from "react-icons/fi";
 import { SiLeetcode } from "react-icons/si";
-import { socials, profile } from "../content/site";
+import { socials, profile } from "../../data";
 
 const SocialLinks = ({ showEmail = false, onCopyEmail, copied }) => {
   const [internalCopied, setInternalCopied] = useState(false);

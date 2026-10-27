@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FiUser, FiBookOpen, FiMapPin, FiAward, FiArrowUpRight } from "react-icons/fi";
-import { education } from "../content/site";
+import { education } from "../../data/education";
 
 const About = () => {
   // Only display college card on the home page as requested

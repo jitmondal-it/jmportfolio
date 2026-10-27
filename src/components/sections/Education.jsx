@@ -1,5 +1,5 @@
-import { education } from "../content/site";
-import SectionIndex from "./SectionIndex";
+import { education } from "../../data/education";
+import SectionIndex from "../common/SectionIndex";
 
 const Education = () => {
   if (!education.length) return null;

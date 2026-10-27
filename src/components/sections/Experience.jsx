@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { FiBriefcase, FiChevronDown, FiExternalLink, FiMapPin, FiCalendar } from "react-icons/fi";
-import { experiences } from "../content/site";
+import { experiences } from "../../data/experiences";
 
 const Experience = () => {
   const [openItems, setOpenItems] = useState({});
+
+  if (!experiences || experiences.length === 0) {
+    return null;
+  }
 
   const toggleItem = (index) => {
     setOpenItems((prev) => ({

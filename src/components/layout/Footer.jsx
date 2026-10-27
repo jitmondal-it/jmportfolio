@@ -1,5 +1,5 @@
 import { FiArrowUp } from "react-icons/fi";
-import { profile } from "../content/site";
+import { profile } from "../../data/profile";
 
 const Footer = () => {
   const year = new Date().getFullYear();

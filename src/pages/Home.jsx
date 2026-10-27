@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Hero from "../components/Hero";
-import Projects from "../components/TProjects";
-import Skills from "../components/Skills";
-import About from "../components/About";
-import Contact from "../components/Contact";
+import Hero from "../components/sections/Hero";
+import Projects from "../components/sections/TProjects";
+import Skills from "../components/sections/Skills";
+import About from "../components/sections/About";
+import Contact from "../components/sections/Contact";
 
 const Home = () => {
   const location = useLocation();

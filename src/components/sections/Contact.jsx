@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiCheck, FiCopy, FiMail, FiSend } from "react-icons/fi";
-import { profile } from "../content/site";
-import SocialLinks from "./SocialLinks";
+import { profile } from "../../data/profile";
+import SocialLinks from "../common/SocialLinks";
 
 const Contact = () => {
   const [copied, setCopied] = useState(false);

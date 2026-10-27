@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { FiGithub, FiLinkedin, FiArrowRight } from "react-icons/fi";
 import { SiLeetcode } from "react-icons/si";
-import { profile, socials } from "../content/site";
+import { profile, socials } from "../../data";
 import "./Intro.css";
 
 const SOCIAL_ICONS = {
@@ -337,7 +337,7 @@ const Intro = ({ onComplete, prefersReducedMotion = false }) => {
               }}
             >
               <div className="intro-banner-inner">
-                {/* Top Name & Role from site.js */}
+                {/* Top Name & Role from data */}
                 <Motion.header
                   className="intro-banner-top"
                   initial={false}

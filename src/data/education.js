@@ -1,0 +1,32 @@
+export const education = [
+  {
+    institution: "JIS College of Engineering",
+    program: "Bachelor of Technology in Information Technology (B.Tech)",
+    year: "2023 – Expected 2027",
+    focus: "Data Structures, Algorithms, DBMS, Operating Systems, Computer Networks",
+    grade: "Ranked 1st in IT Department (2nd Year)",
+    certificateLink: "https://drive.google.com/file/d/1410g9N7DA4Mz3Hl_Cq-Q2xTMWYcg3bPT/view?usp=sharing",
+    type: "Undergraduate Degree",
+    location: "Kalyani, West Bengal",
+  },
+  {
+    institution: "Sainthia Town High School",
+    program: "Pure Science Stream (WBCHSE)",
+    year: "2021 – 2023",
+    focus: "Physics, Chemistry, Mathematics",
+    grade: "87.8% in Class XII",
+    certificateLink: "",
+    type: "Higher Secondary Education",
+    location: "West Bengal",
+  },
+  {
+    institution: "Ekpaharia High School",
+    program: "WBBSE",
+    year: "Completed 2021",
+    focus: "Mathematics, Physical Science, Life Science, Indian History, English, Bengali",
+    grade: "92% in Class X",
+    certificateLink: "",
+    type: "SECONDARY EDUCATION",
+    location: "West Bengal",
+  },
+];

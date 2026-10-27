@@ -12,7 +12,7 @@ import {
   FiSun,
   FiMoon,
 } from "react-icons/fi";
-import { profile } from "../content/site";
+import { profile } from "../../data/profile";
 
 const navItems = [
   { label: "Home", href: "#home", icon: FiHome },

@@ -1,19 +1,6 @@
 import { useState } from "react";
 import { FiCpu, FiLayers } from "react-icons/fi";
-import { skillCategories, skillGroups } from "../content/site";
-
-const techIcons = {
-  Java: "/technology/java.png",
-  "Spring Boot": "/technology/spring.png",
-  Docker: "/technology/docker.png",
-  Maven: "/technology/maven.png",
-  PostgreSQL: "/technology/postgresql.png",
-  MongoDB: "/technology/mongodb.png",
-  React: "/technology/react.png",
-  "Tailwind CSS": "/technology/tailwind-css.webp",
-  JavaScript: "/technology/js.webp",
-  "JavaScript (ES6+)": "/technology/js.webp",
-};
+import { skillCategories, skillGroups, techIconMap } from "../../data/skills";
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -24,7 +11,6 @@ const Skills = () => {
     { id: "backend", label: "Backend" },
     { id: "data", label: "Data" },
     { id: "frontend", label: "Frontend" },
-    { id: "tools", label: "Tools" },
   ];
 
   const filteredGroups =
@@ -66,7 +52,7 @@ const Skills = () => {
 
             <div className="skills-item-tags">
               {group.items.map((skill) => {
-                const icon = skill.icon || techIcons[skill.name];
+                const icon = skill.icon || (techIconMap && techIconMap[skill.name]);
                 const isHovered = hoveredSkill === skill.name;
 
                 return (

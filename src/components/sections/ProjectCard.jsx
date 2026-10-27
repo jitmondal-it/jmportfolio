@@ -8,29 +8,7 @@ import {
   FiLayers,
   FiX,
 } from "react-icons/fi";
-import { skillGroups } from "../content/site";
-
-const techIconMap = {
-  Java: "/technology/java.png",
-  "Spring Boot": "/technology/spring.png",
-  React: "/technology/react.png",
-  "Tailwind CSS": "/technology/tailwind-css.webp",
-  MongoDB: "/technology/mongodb.png",
-  PostgreSQL: "/technology/postgresql.png",
-  MySQL: "/technology/mysql.png",
-  TypeScript: "/technology/typescript.jpeg",
-  Docker: "/technology/docker.png",
-  Maven: "/technology/maven.png",
-  JavaScript: "/technology/js.webp",
-  "JavaScript (ES6+)": "/technology/js.webp",
-  "HTML5 / Semantic Web": "/technology/html.jpg",
-  HTML5: "/technology/html.jpg",
-  "CSS3 / Modern Layouts": "/technology/css.png",
-  CSS3: "/technology/css.png",
-  Keycloak: "/technology/keycloak.png",
-  "Keycloak IAM": "/technology/keycloak.png",
-  Postgres: "/technology/postgresql.png",
-};
+import { skillGroups, techIconMap } from "../../data/skills";
 
 const getTechIcon = (techName, customProjectIcons = {}) => {
   if (!techName) return null;
@@ -60,15 +38,17 @@ const getTechIcon = (techName, customProjectIcons = {}) => {
     }
   }
 
-  if (techIconMap[techName]) return techIconMap[techName];
-  const lower = techName.trim().toLowerCase();
-  for (const [key, val] of Object.entries(techIconMap)) {
-    if (
-      key.toLowerCase() === lower ||
-      key.toLowerCase().includes(lower) ||
-      lower.includes(key.toLowerCase())
-    ) {
-      return val;
+  if (techIconMap && techIconMap[techName]) return techIconMap[techName];
+  if (techIconMap) {
+    const lower = techName.trim().toLowerCase();
+    for (const [key, val] of Object.entries(techIconMap)) {
+      if (
+        key.toLowerCase() === lower ||
+        key.toLowerCase().includes(lower) ||
+        lower.includes(key.toLowerCase())
+      ) {
+        return val;
+      }
     }
   }
 
@@ -254,7 +234,9 @@ const ProjectDetailsModal = ({ project, onClose }) => {
                       <FiGithub className="btn-icon" aria-hidden="true" />
                     )}
                     <span>{link.label}</span>
-                    <FiArrowUpRight className="arrow-icon" aria-hidden="true" />
+                    {!isLive && (
+                      <FiArrowUpRight className="arrow-icon" aria-hidden="true" />
+                    )}
                   </a>
                 );
               })}
@@ -546,7 +528,9 @@ const ProjectCard = ({ project, variant = "featured" }) => {
                     <FiGithub className="btn-icon" aria-hidden="true" />
                   )}
                   <span>{link.label}</span>
-                  <FiArrowUpRight className="arrow-icon" aria-hidden="true" />
+                  {!isLive && (
+                    <FiArrowUpRight className="arrow-icon" aria-hidden="true" />
+                  )}
                 </a>
               );
             })}

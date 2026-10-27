@@ -1,6 +1,6 @@
 import { FiFolder } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { featuredProjects, additionalProjects } from "../content/site";
+import { featuredProjects, additionalProjects } from "../../data/projects";
 import ProjectCard from "./ProjectCard";
 
 const Projects = () => {

@@ -12,27 +12,12 @@ import {
   FiDownload,
   FiMail,
 } from "react-icons/fi";
-import { profile, achievements, education } from "../content/site";
+import { profile, achievements, education, corePhilosophy } from "../data";
 
 const AboutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const corePhilosophy = [
-  {
-    title: "Building Reliable Backend Systems",
-    desc: "I enjoy building backend applications with Java and Spring Boot, focusing on clean code, secure APIs, and well-structured microservices. My goal is to create systems that are reliable, maintainable, and easy to scale.",
-  },
-  {
-    title: "Learning Through Problem Solving",
-    desc: "I regularly practice Data Structures and Algorithms to improve my problem-solving skills. From arrays and trees to graphs and dynamic programming, I focus on understanding the logic and finding efficient solutions.",
-  },
-  {
-    title: "Creating Better User Experiences",
-    desc: "I use React to build responsive and intuitive interfaces that work smoothly with backend services. I enjoy improving the overall user experience through clean layouts, thoughtful interactions, and real-time features.",
-  },
-];
 
   return (
     <div className="about-page section-wrap">

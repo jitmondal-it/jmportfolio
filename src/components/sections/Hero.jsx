@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FiArrowRight, FiDownload, FiMapPin } from "react-icons/fi";
-import { profile } from "../content/site";
+import { profile } from "../../data/profile";
 import HeroCard from "./HeroCard";
-import SocialLinks from "./SocialLinks";
+import SocialLinks from "../common/SocialLinks";
 
 const Hero = () => {
   const [copied, setCopied] = useState(false);
@@ -43,9 +43,8 @@ const Hero = () => {
             Hey, I'm <span className="hero-name-highlight">{profile.name}</span>
           </h1>
 
-          {/* Headline Statement from site.js */}
+          {/* Headline Statement */}
           <p className="hero-tagline-statement">{profile.headline}</p>
-
 
           {/* Action Rail & Socials */}
           <div className="hero-actions-hub">
@@ -78,7 +77,7 @@ const Hero = () => {
           <div className="hero-visual-container">
             <HeroCard />
 
-            {/* Authentic Stats HUD from site.js */}
+            {/* Authentic Stats HUD */}
             {profile.stats && profile.stats.length > 0 && (
               <div className="hero-stats-matrix">
                 {profile.stats.map((stat) => (
