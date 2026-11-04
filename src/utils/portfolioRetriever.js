@@ -102,6 +102,16 @@ export function getTrustedPortfolioLinks() {
     });
   }
 
+  // Fitness AI Architecture Diagram link
+  links.push({
+    id: "fitness_ai_architecture_diagram",
+    project: "AI Fitness Recommendation Engine",
+    label: "Fitness AI Architecture Diagram",
+    shortLabel: "Architecture Diagram",
+    url: "/project/fitnessai-architecture.png",
+    type: "diagram",
+  });
+
   return links;
 }
 
@@ -111,6 +121,7 @@ export function getTrustedPortfolioLinks() {
 export function isTrustedUrl(url) {
   if (!url || typeof url !== "string") return false;
   const trimmed = url.trim();
+  if (trimmed === "/project/fitnessai-architecture.png") return true;
   const trusted = getTrustedPortfolioLinks();
   return trusted.some((t) => t.url === trimmed);
 }
@@ -211,13 +222,26 @@ export function retrievePortfolioContext(query, history = []) {
     ordinalProject = allProjects[4]; // Email Sender
   }
 
-  // B. Specific project name matching
+  // B. Specific project name & domain matching
+  const isFitnessAiQuery =
+    q.includes("fitness") ||
+    q.includes("workout") ||
+    q.includes("ai project") ||
+    q.includes("recommendation engine") ||
+    q.includes("keycloak") ||
+    q.includes("authentication flow") ||
+    (q.includes("gemini") && (q.includes("recommend") || q.includes("generate") || q.includes("health") || q.includes("workflow") || q.includes("ai"))) ||
+    (q.includes("kafka") && (q.includes("event") || q.includes("communicate") || q.includes("stream") || q.includes("services"))) ||
+    q.includes("services communicate") ||
+    q.includes("service communication") ||
+    (q.includes("microservice") && !q.includes("hiresphere") && !q.includes("synapse"));
+
   const matchedSpecificProjects = allProjects.filter((proj) => {
     const titleMatch = q.includes(proj.title.toLowerCase());
     const aliasMatch =
       (proj.title.includes("HireSphere") && q.includes("hire")) ||
       (proj.title.includes("Synapse") && q.includes("synapse")) ||
-      (proj.title.includes("Fitness") && (q.includes("fitness") || q.includes("workout"))) ||
+      (proj.title.includes("Fitness") && isFitnessAiQuery) ||
       (proj.title.includes("E-Commerce") && (q.includes("ecommerce") || q.includes("commerce") || q.includes("store"))) ||
       (proj.title.includes("Email") && (q.includes("email sender") || q.includes("mail app") || q.includes("mailer")));
     return titleMatch || aliasMatch;
@@ -277,6 +301,45 @@ export function retrievePortfolioContext(query, history = []) {
     });
 
     contextParts.push(`PROJECT DATA:\n${projDescriptions.join("\n\n")}`);
+
+    // If Fitness AI is included, append verified detailed microservices architecture
+    if (projectsToInclude.some((p) => p.title.includes("Fitness"))) {
+      contextParts.push(
+        `AI FITNESS RECOMMENDATION ENGINE — VERIFIED MICROSERVICES ARCHITECTURE SPECIFICATION:\n` +
+        `Architecture Diagram Asset: /project/fitnessai-architecture.png\n\n` +
+        `Verified Architecture Components & Workflows:\n` +
+        `1. Frontend and Authentication:\n` +
+        `   - The frontend is built in React.\n` +
+        `   - Users authenticate through Keycloak (centralized OAuth2 / OpenID Connect identity provider).\n` +
+        `   - Authenticated client sends requests with Bearer tokens to the API Gateway.\n` +
+        `   - API Gateway contains a User sync filter that registers and synchronizes users via the Gateway user client (UserService.java) calling the User API in User management.\n\n` +
+        `2. API Gateway and Security:\n` +
+        `   - Built with Spring Cloud Gateway (port 8080) as the central entry point.\n` +
+        `   - Enforces JWT security on routes before dispatching requests.\n` +
+        `   - Routes client requests downstream to Activity API and User API.\n\n` +
+        `3. User and Activity Services:\n` +
+        `   - User Service (port 8081): Exposes User API, delegates to User service (UserService.java), persists and queries user accounts in PostgreSQL User database via User repository (UserRepo.java).\n` +
+        `   - Activity Service (port 8082): Exposes Activity API, delegates to Activity service, stores and reads workout data in Activity database via Activity repository, performs User validation calling User API to ensure valid user state, and publishes activity events (Activity.java) to Kafka.\n\n` +
+        `4. Inter-Service Communication and Kafka:\n` +
+        `   - Direct synchronous REST APIs are used for client API Gateway dispatch and internal user validation.\n` +
+        `   - Asynchronous event-driven messaging uses Apache Kafka as an event bus. The Activity Service publishes activity events to Kafka; Kafka delivers the event to the AI Service. This decouples workout ingestion from compute-heavy AI generation.\n\n` +
+        `5. AI Processing and Gemini Integration:\n` +
+        `   - AI Service (port 8083) features an Activity listener that consumes workout events delivered by Kafka.\n` +
+        `   - Activity listener requests AI analysis, invoking Gemini client (GeminiService.java) to construct prompts and call Google Gemini AI.\n` +
+        `   - Google Gemini generates structured 4-tier personalized recommendations:\n` +
+        `     * Overall Analysis: Comprehensive analysis of the user's fitness activity.\n` +
+        `     * Improvements: Targeted areas where the user can improve workouts.\n` +
+        `     * Suggestions: Actionable workout and fitness suggestions.\n` +
+        `     * Safety: Safety-oriented guidance based on activity telemetry.\n\n` +
+        `6. Recommendation Persistence and Retrieval:\n` +
+        `   - The Activity listener stores the Gemini recommendation result in MongoDB via Recommendation repository in Recommendation database.\n` +
+        `   - Recommendation API delegates queries to Recommendation service, which reads results from Recommendation repository.\n` +
+        `   - React frontend calls Recommendation API to fetch and render user recommendations.\n\n` +
+        `7. Configuration and Service Discovery:\n` +
+        `   - Centralized externalized configuration is managed by Spring Cloud Config Server (port 8888) across API Gateway, User Service, Activity Service, and AI Service.\n` +
+        `   - Dynamic service discovery and registration is managed by Netflix Eureka (port 8761).`
+      );
+    }
   }
 
   // 4. Skills & Technologies Intent

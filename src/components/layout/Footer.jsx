@@ -12,7 +12,7 @@ const Footer = () => {
     <footer className="site-footer">
       <div className="footer-inner">
         <p className="footer-text">
-          © {year} {profile.name} • Designed & Built with care.
+          © {year} {profile.name}
         </p>
 
         <button

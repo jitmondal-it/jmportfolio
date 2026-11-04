@@ -1,4 +1,10 @@
 {
+  "functions": {
+    "api/*.js": {
+      "includeFiles": "src/**",
+      "maxDuration": 15
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
